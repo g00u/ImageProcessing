@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing</title>
+</head>
+<body>
+    <h1>Welcome to Image Processing</h1>
+</body>
+</html>
+<div id="calendar"></div>
+
+<script>
+    function createCalendar(year, month) {
+        let calendar = document.createElement('table');
+        let headerRow = document.createElement('tr');
+        let daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        daysOfWeek.forEach(day => {
+            let th = document.createElement('th');
+            th.innerText = day;
+            headerRow.appendChild(th);
+        });
+
+        calendar.appendChild(headerRow);
+
+        let date = new Date(year, month);
+        let firstDay = new Date(year, month).getDay();
+        let daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        let row = document.createElement('tr');
+        for (let i = 0; i < firstDay; i++) {
+            let cell = document.createElement('td');
+            row.appendChild(cell);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            if (row.children.length === 7) {
+                calendar.appendChild(row);
+                row = document.createElement('tr');
+            }
+
+            let cell = document.createElement('td');
+            cell.innerText = day;
+            cell.addEventListener('click', () => {
+                let diaryEntry = prompt(`Enter your diary entry for ${day}/${month + 1}/${year}:`);
+                if (diaryEntry) {
+                    cell.title = diaryEntry;
+                }
+            });
+            row.appendChild(cell);
+        }
+
+        calendar.appendChild(row);
+        return calendar;
+    }
+
+    document.getElementById('calendar').appendChild(createCalendar(new Date().getFullYear(), new Date().getMonth()));
+</script>
