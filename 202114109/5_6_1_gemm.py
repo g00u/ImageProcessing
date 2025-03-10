@@ -1,0 +1,18 @@
+import numpy as np,cv2
+
+src1 = np.array([1,2,3,1,2,3], np.float32).reshape(2,3)
+src2 = np.array([1,2,3,4,5,6], np.float32).reshape(2,3)
+src3 = np.array([1,1,1,2,2,2], np.float32).reshape(2,3)
+
+alpha, beta = 1.0, 1.0
+
+dst1 = cv2.gemm(src1, src2, alpha, None, beta, flags = cv2.GEMM_1_T)
+#dst1 = np.dot(src1.T, src2)
+dst2 = cv2.gemm(src1, src2, alpha, None, beta, flags = cv2.GEMM_2_T)
+#dst2 = np.dot(src1,src2.T)
+dst3 = cv2.gemm(src1, src3.T, alpha, None, beta)
+#dst3 = np.dot(src1, src3.T)
+
+titles =['src1','src2', 'src3','dst1','dst2','dst3']
+for title in titles:
+    print("[%s]=\n%s\n" %(title, eval(title)))
